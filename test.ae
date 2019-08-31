@@ -1,0 +1,55 @@
+//Parser Test
+
+allocate(size int) void* builtin
+free(ptr int*) void builtin
+print(ptr byte*) void builtin
+
+Vector struct {
+    x int;
+    y int;
+}
+
+manhatten(vec Vector*) int {
+    return vec.x + vec.y; 
+}
+
+fillArray(data int*, size int) void {
+    i int = 0;
+    while(i < size) {
+        data[i] = i;
+        i = i + 1;
+    }
+}
+
+data int* = allocate(10 * 4) as int*;
+string byte* = "Hello World";
+
+foo(x int) int {
+
+    Inner struct {
+        name byte*;
+        x int;
+    }
+
+    inner Inner;
+    inner.name = "inner struct";
+
+    bar(inner Inner*) void { (print(inner.name)); }
+    (bar(&inner));
+    return x;
+}
+
+myVec Vector;
+myVec.x = 3;
+myVec.y = 2;
+
+myVecPtr Vector* = &myVec;
+myVecPtr.x = 8;
+
+(fillArray(data, 10));
+
+ret int = data[7];
+(free(data));
+
+(print(string));
+return -ret + manhatten(&myVec) + foo(2);
